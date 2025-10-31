@@ -18,8 +18,8 @@ export function Navbar() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-background border-b border-border">
-      <div className="container z-60 mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-50 bg-background border-b border-border">
+      <nav className="container z-60 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
@@ -86,7 +86,7 @@ export function Navbar() {
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="bg-background border-t border-border shadow-lg absolute left-0 top-16 w-full"
             >
-              <nav className="flex flex-col items-center space-y-2 p-4">
+              <div className="flex flex-col items-center space-y-2 p-4">
                 {navLinks.map((link) => (
                   <Link
                     key={link.label}
@@ -97,11 +97,11 @@ export function Navbar() {
                     {link.label}
                   </Link>
                 ))}
-              </nav>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
-    </nav>
+      </nav>
+    </header>
   );
 }

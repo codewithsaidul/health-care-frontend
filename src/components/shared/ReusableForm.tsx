@@ -8,22 +8,26 @@ import z from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
+  Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  Form as ShadForm,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { IForm } from "@/types/form.type";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export function ReusableForm({
   fields,
   formSchema,
   defaultValues,
   onSubmit,
-  header,
+  headerTitle,
+  headerDescription,
+  containerClassName,
   footer,
   buttonTitle,
 }: IForm) {
@@ -31,8 +35,7 @@ export function ReusableForm({
     Record<string, boolean>
   >({});
 
-
-  type FormValues = z.infer<typeof formSchema>
+  type FormValues = z.infer<typeof formSchema>;
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues,
@@ -51,18 +54,32 @@ export function ReusableForm({
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl p-8 space-y-6">
+    <div
+      className={cn(
+        "bg-white rounded-2xl shadow-xl p-8 space-y-6",
+        containerClassName
+      )}
+    >
       {/* Header */}
       <div className="text-center space-y-2">
-        <h2 className="text-3xl font-bold text-gray-900">{header.title}</h2>
-        {header.description && (
-          <p className="text-gray-600">{header.description}</p>
+        <Link href="/" className="inline-flex items-center gap-2 mb-6">
+          <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+            <span className="text-primary-foreground font-bold text-xl">H</span>
+          </div>
+          <span className="font-bold text-xl text-foreground">HealthCare</span>
+        </Link>
+        <h2 className="text-3xl font-bold text-gray-900">{headerTitle}</h2>
+        {headerDescription && (
+          <p className="text-gray-600">{headerDescription}</p>
         )}
       </div>
 
       {/* Form */}
-      <ShadForm {...form}>
-        <form onSubmit={form.handleSubmit(onSubmitHandler)} className="space-y-4">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmitHandler)}
+          className="space-y-4"
+        >
           {fields.map((field) => (
             <FormField
               key={field.name}
@@ -115,7 +132,7 @@ export function ReusableForm({
             {buttonTitle}
           </Button>
         </form>
-      </ShadForm>
+      </Form>
 
       {/* Footer */}
       {footer && <div className="text-center">{footer}</div>}

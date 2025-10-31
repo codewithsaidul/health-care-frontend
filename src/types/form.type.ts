@@ -4,10 +4,6 @@ import { ZodType } from "zod";
 
 
 
-
-
-
-
 export type FieldType =
   | "text"
   | "email"
@@ -44,7 +40,9 @@ export interface IForm {
   formSchema: ZodType<any, any>;
   defaultValues?: Record<string, any>;
   onSubmit: (data: any) => void;
-  header: { title: string; description?: string };
+  headerTitle: string;
+  headerDescription: string;
+  containerClassName: string;
   footer?: React.ReactNode;
   buttonTitle: string;
 }

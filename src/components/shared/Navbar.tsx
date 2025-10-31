@@ -63,7 +63,7 @@ export function Navbar() {
               size="sm"
               className="flex-1"
             >
-              <Link href="/login">Login</Link>
+              <Link href="/auth/login">Login</Link>
             </Button>
             <span
               className="md:hidden flex-1 bg-transparent font-bold text-primary rounded-lg transition-colors"

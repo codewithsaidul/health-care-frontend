@@ -5,7 +5,10 @@ import TopDoctor from "./TopDoctor";
 
 export function TopDoctorsSection() {
   return (
-    <section id="doctors" className="py-20 md:py-32 bg-background">
+    <section id="doctors" className="relative py-20 md:py-32 bg-background overflow-hidden">
+      <div className="absolute top-0 left-0 w-96 h-96 bg-accent/30 rounded-full blur-3xl z-1" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary/30 rounded-full blur-3xl z-1" />
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16 space-y-4">

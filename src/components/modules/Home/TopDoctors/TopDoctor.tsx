@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default function TopDoctor({ doctor }: { doctor: IDoctor }) {
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col pt-0">
+    <Card className="overflow-hidden z-2 hover:shadow-lg transition-shadow duration-300 flex flex-col pt-0">
       {/* Doctor Image */}
       <div className="relative aspect-square min-h-[200px] max-h-[400px] bg-muted overflow-hidden">
         <Image

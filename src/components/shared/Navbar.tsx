@@ -47,17 +47,17 @@ export function Navbar() {
           </div>
 
           {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* <div className="hidden md:flex items-center gap-3">
             <Button variant="outline" size="lg">
               <Link href="/login">Login</Link>
             </Button>
             <Button size="lg">
               <Link href="/register">Sign Up</Link>
             </Button>
-          </div>
+          </div> */}
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-3">
+          {/* Auth && Mobile Menu Button */}
+          <div className="flex items-center gap-3">
             <Button
               variant="default"
               size="sm"
@@ -66,8 +66,7 @@ export function Navbar() {
               <Link href="/login">Login</Link>
             </Button>
             <span
-            // size="default"
-              className="flex-1 bg-transparent font-bold text-primary rounded-lg transition-colors"
+              className="md:hidden flex-1 bg-transparent font-bold text-primary rounded-lg transition-colors"
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle menu"
             >

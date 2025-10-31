@@ -21,7 +21,7 @@ export default function HeroLeft() {
           Find Your Perfect Doctor With,{" "}
           <span className="text-primary">AI Intelligence</span>
         </h1>
-        <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
+        <p className="text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto">
           Our advanced AI-driven doctor suggestion system analyzes your
           symptoms, medical history, and preferences to match you with the
           best-fit healthcare professionals in seconds.

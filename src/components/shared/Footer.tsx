@@ -26,10 +26,10 @@ export function Footer() {
             <h3 className="font-semibold text-foreground">Quick Links</h3>
             <ul className="space-y-2">
               {[
-                { href: "#", label: "Find Doctors" },
-                { href: "#", label: "Services" },
-                { href: "#", label: "Appointments" },
-                { href: "#", label: "Blog" },
+                { href: "/doctors", label: "Find Doctors" },
+                { href: "/services", label: "Services" },
+                { href: "/appointments", label: "Appointments" },
+                { href: "/blog", label: "Blog" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-muted-foreground hover:text-primary transition-colors text-sm">
@@ -45,10 +45,10 @@ export function Footer() {
             <h3 className="font-semibold text-foreground">Company</h3>
             <ul className="space-y-2">
               {[
-                { href: "#", label: "About Us" },
-                { href: "#", label: "Careers" },
-                { href: "#", label: "Privacy Policy" },
-                { href: "#", label: "Terms of Service" },
+                { href: "/about", label: "About Us" },
+                { href: "/careers", label: "Careers" },
+                { href: "privacyPolicy", label: "Privacy Policy" },
+                { href: "termsService", label: "Terms of Service" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-muted-foreground hover:text-primary transition-colors text-sm">
@@ -85,9 +85,9 @@ export function Footer() {
             <p className="text-muted-foreground text-sm">© {currentYear} HealthCare Management. All rights reserved.</p>
             <div className="flex gap-6">
               {[
-                { label: "Twitter", href: "#" },
-                { label: "Facebook", href: "#" },
-                { label: "LinkedIn", href: "#" },
+                { label: "Twitter", href: "https://twitter.cpm" },
+                { label: "Facebook", href: "https://facebook.com" },
+                { label: "LinkedIn", href: "https://linkedin.com" },
               ].map((social) => (
                 <Link
                   key={social.href}

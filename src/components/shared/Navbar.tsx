@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -10,15 +11,15 @@ export function Navbar() {
 
   const navLinks = [
     { href: "/", label: "Home" },
-    { href: "#about", label: "About" },
-    { href: "#doctors", label: "Find Doctors" },
-    { href: "#services", label: "Services" },
-    { href: "#contact", label: "Contact" },
+    { href: "/about", label: "About" },
+    { href: "/doctors", label: "Find Doctors" },
+    { href: "/services", label: "Services" },
+    { href: "/contact", label: "Contact" },
   ];
 
   return (
     <nav className="sticky top-0 z-50 bg-background border-b border-border">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container z-60 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
@@ -36,7 +37,7 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link
-                key={link.href}
+                key={link.label}
                 href={link.href}
                 className="text-foreground hover:text-primary transition-colors text-base font-medium"
               >
@@ -56,42 +57,50 @@ export function Navbar() {
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 hover:bg-muted rounded-lg transition-colors"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="md:hidden flex items-center gap-3">
+            <Button
+              variant="default"
+              size="sm"
+              className="flex-1"
+            >
+              <Link href="/login">Login</Link>
+            </Button>
+            <span
+            // size="default"
+              className="flex-1 bg-transparent font-bold text-primary rounded-lg transition-colors"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X size={32} /> : <Menu size={32} />}
+            </span>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="md:hidden pb-4 space-y-2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="block px-4 py-2 text-foreground hover:bg-muted rounded-lg transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
-            <div className="flex gap-2 px-4 pt-2">
-              <Button
-                variant="outline"
-                size="sm"
-                className="flex-1 bg-transparent"
-              >
-                <Link href="/login">Login</Link>
-              </Button>
-              <Button size="sm" className="flex-1">
-                <Link href="/register">Sign Up</Link>
-              </Button>
-            </div>
-          </div>
-        )}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="bg-background border-t border-border shadow-lg absolute left-0 top-16 w-full"
+            >
+              <nav className="flex flex-col items-center space-y-2 p-4">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className="block px-4 py-2 text-foreground hover:bg-muted rounded-lg transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   );

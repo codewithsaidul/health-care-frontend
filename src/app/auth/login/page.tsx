@@ -5,23 +5,47 @@ import {
   loginFields,
   loginFooter,
 } from "@/data/auth.constants";
-import { loginUser } from "@/utils/auth";
+import { checkAuthStatus, loginUser } from "@/utils/auth";
 import { loginSchema } from "@/validation/auth.validation";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import z from "zod";
 
 export default function LOginPage() {
+  const router = useRouter();
+
   const handleSubmit = async (values: z.infer<typeof loginSchema>) => {
-    const toastId = toast.loading("Logging...")
+    const toastId = toast.loading("Logging...");
     try {
       const res = await loginUser(values.email, values.password);
       console.log("🚀 ~ login ~ handleSubmit ~ response:", res.success);
 
       if (res.success) {
+        const authStatus = await checkAuthStatus();
+
+        if (authStatus.isAuthenticated && authStatus.user) {
+          const { role } = authStatus.user;
+          console.log("🚀 ~ handleSubmit ~ role:", role)
+          
+          switch (role) {
+            case "ADMIN":
+              router.push("/dashboard/admin");
+              break;
+            case "DOCTOR":
+              router.push("/dashboard/doctor");
+              break;
+            case "PATIENT":
+              router.push("/dashboard/patient");
+              break;
+            default:
+              router.push("/");
+              break;
+          }
+        }
         toast.success(res.message, { id: toastId });
       }
     } catch (error: unknown) {
-      const message = error as string
+      const message = error as string;
       console.log(typeof error);
       toast.error(message, { id: toastId });
     }

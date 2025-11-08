@@ -1,7 +1,7 @@
-import { HeroSection } from "@/components/modules/Home/HeroSection/HeroSection";
-import { HowToUseSection } from "@/components/modules/Home/HowToUseSection/HowToUseSection";
-import PatientReviews from "@/components/modules/Home/reviews/PatientReviews";
-import { TopDoctorsSection } from "@/components/modules/Home/TopDoctors/TopDoctors";
+import HeroSection from "@/components/sections/Home/HeroSection/HeroSection";
+import HowToUseSection from "@/components/sections/Home/HowToUseSection/HowToUseSection";
+import PatientReviews from "@/components/sections/Home/reviews/PatientReviews";
+import { TopDoctorsSection } from "@/components/sections/Home/TopDoctors/TopDoctors";
 
 export default function Home() {
   return (

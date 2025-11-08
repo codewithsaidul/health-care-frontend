@@ -1,21 +1,28 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { checkAuthStatus } from "@/utils/auth";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
+const { user } = await checkAuthStatus();
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { role } = user || { role: "guest" };
 
-  const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About" },
-    { href: "/doctors", label: "Find Doctors" },
-    { href: "/services", label: "Services" },
-    { href: "/contact", label: "Contact" },
+  const navItems = [
+    { href: "#", label: "Consultation" },
+    { href: "#", label: "Health Plans" },
+    { href: "#", label: "Medicine" },
+    { href: "#", label: "Diagnostics" },
+    { href: "#", label: "NGOs" },
   ];
+
+  if (role === "ADMIN") {
+    navItems.push({ href: "/dashboard/admin", label: "Admin Dashboard" });
+  }
 
   return (
     <header className="sticky top-0 z-50 bg-background border-b border-border">
@@ -34,8 +41,8 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
+          <div className="hidden lg:flex items-center gap-8">
+            {navItems.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
@@ -58,15 +65,11 @@ export function Navbar() {
 
           {/* Auth && Mobile Menu Button */}
           <div className="flex items-center gap-3">
-            <Button
-              variant="default"
-              size="sm"
-              className="flex-1"
-            >
+            <Button variant="default" size="sm" className="flex-1">
               <Link href="/auth/login">Login</Link>
             </Button>
             <span
-              className="md:hidden flex-1 bg-transparent font-bold text-primary rounded-lg transition-colors"
+              className="lg:hidden flex-1 bg-transparent font-bold text-primary rounded-lg transition-colors cursor-pointer"
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle menu"
             >
@@ -86,7 +89,7 @@ export function Navbar() {
               className="bg-background border-t border-border shadow-lg absolute left-0 top-16 w-full"
             >
               <div className="flex flex-col items-center space-y-2 p-4">
-                {navLinks.map((link) => (
+                {navItems.map((link) => (
                   <Link
                     key={link.label}
                     href={link.href}

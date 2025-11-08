@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  IconDashboard,
-  IconHelp,
-  IconSearch,
-  IconSettings,
-  IconUsers,
-} from "@tabler/icons-react";
+import { IconDashboard, IconHelp, IconSearch, IconSettings, IconUsers } from "@tabler/icons-react";
 import * as React from "react";
 
 import { NavMain } from "@/components/nav-main";
@@ -18,13 +12,9 @@ import {
   SidebarFooter,
   SidebarHeader,
 } from "@/components/ui/sidebar";
-import { checkAuthStatus } from "@/utils/auth";
+import { UseUser } from "@/provider/UserProvider";
 import Link from "next/link";
-
-const { user } = await checkAuthStatus();
-console.log("🚀 ~ user:", user);
-
-const { role } = user || { role: "guest" };
+import { IUser } from "@/types/user.types";
 
 const navMainItems = [
   {
@@ -49,26 +39,31 @@ const navMainItems = [
   // },
 ];
 
-if (role === "ADMIN") {
-  navMainItems.push(
-    {
-      title: "Manage Doctors",
-      url: "/dashboard/admin/manage-doctors",
-      icon: IconSettings,
-    },
-    {
-      title: "Manage Patients",
-      url: "/dashboard/admin/manage-patients",
-      icon: IconUsers,
-    }
-  );
-}
 
-const data = {
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { user } = UseUser();
+  console.log("🚀 ~ AppSidebar ~ user:", user)
+
+  if (user?.role === "ADMIN") {
+    navMainItems.push(
+      {
+        title: "Manage Doctors",
+        url: "/admin/manage-doctors",
+        icon: IconSettings,
+      },
+      {
+        title: "Manage Patients",
+        url: "/admin/manage-patients",
+        icon: IconUsers,
+      }
+    );
+  }
+
+  const data = {
   user: {
     name: user?.name,
     email: user?.email,
-    avatar: user?.imageUrl,
+    profilePhoto: user?.profilePhoto,
   },
   navMain: navMainItems,
   navSecondary: [
@@ -90,7 +85,6 @@ const data = {
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -110,7 +104,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={data.user as IUser} />
       </SidebarFooter>
     </Sidebar>
   );

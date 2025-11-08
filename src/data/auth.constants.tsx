@@ -36,3 +36,15 @@ export const loginFooter = (
     </a>
   </p>
 );
+
+
+
+
+export const registerFooter = (
+  <p className="text-sm text-gray-500">
+    Already have an account?{" "}
+    <a href="/auth/register" className="text-primary hover:underline">
+      Log In
+    </a>
+  </p>
+);

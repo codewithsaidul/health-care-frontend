@@ -1,69 +1,27 @@
-"use client";
-import { ReusableForm } from "@/components/shared/ReusableForm";
-import {
-  loginDefaultValues,
-  loginFields,
-  loginFooter,
-} from "@/data/auth.constants";
-import { checkAuthStatus, loginUser } from "@/utils/auth";
-import { loginSchema } from "@/validation/auth.validation";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import z from "zod";
+import LoginForm from "@/components/modules/Auth/LoginForm";
 
-export default function LOginPage() {
-  const router = useRouter();
-
-  const handleSubmit = async (values: z.infer<typeof loginSchema>) => {
-    const toastId = toast.loading("Logging...");
-    try {
-      const res = await loginUser(values.email, values.password);
-      console.log("🚀 ~ login ~ handleSubmit ~ response:", res.success);
-
-      if (res.success) {
-        const authStatus = await checkAuthStatus();
-
-        if (authStatus.isAuthenticated && authStatus.user) {
-          const { role } = authStatus.user;
-          console.log("🚀 ~ handleSubmit ~ role:", role)
-          
-          switch (role) {
-            case "ADMIN":
-              router.push("/dashboard/admin");
-              break;
-            case "DOCTOR":
-              router.push("/dashboard/doctor");
-              break;
-            case "PATIENT":
-              router.push("/dashboard/patient");
-              break;
-            default:
-              router.push("/");
-              break;
-          }
-        }
-        toast.success(res.message, { id: toastId });
-      }
-    } catch (error: unknown) {
-      const message = error as string;
-      console.log(typeof error);
-      toast.error(message, { id: toastId });
-    }
-  };
-
+export default function LoginPage() {
   return (
-    <div className="flex justify-center items-center min-h-screen w-full px-4">
-      <ReusableForm
-        fields={loginFields}
-        formSchema={loginSchema}
-        defaultValues={loginDefaultValues}
-        headerTitle="Welcome Back"
-        headerDescription="Login to your account to continue"
-        containerClassName="w-full max-w-2xl"
-        footer={loginFooter}
-        buttonTitle="Login"
-        onSubmit={handleSubmit}
-      />
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="w-full max-w-md space-y-6 rounded-lg border p-8 shadow-lg">
+        <div className="space-y-2 text-center">
+          <div className="inline-flex justify-center items-center gap-2 mb-6">
+            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+              <span className="text-primary-foreground font-bold text-xl">
+                H
+              </span>
+            </div>
+            <span className="font-bold text-xl text-foreground">
+              HealthCare
+            </span>
+          </div>
+          <h1 className="text-3xl font-bold">Welcome Back</h1>
+          <p className="text-gray-500">
+            Enter your credentials to access your account
+          </p>
+        </div>
+        <LoginForm />
+      </div>
     </div>
   );
 }

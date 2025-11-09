@@ -12,7 +12,8 @@ import { getFieldError } from "@/utils/getFieldError";
 import Link from "next/link";
 import { useActionState } from "react";
 
-export default function LoginForm() {
+export default function LoginForm( { redirectPath }: { redirectPath?: string} ) {
+  console.log("🚀 ~ LoginForm ~ redirectPath:", redirectPath)
   const [state, formAction, isPending] = useActionState(loginUser, null);
 
 
@@ -20,6 +21,10 @@ export default function LoginForm() {
 
   return (
     <form action={formAction}>
+
+      {/* hidden inpit field if redirect path is avaible */}
+      {redirectPath && <input type="hidden" name="redirect" value={redirectPath} />}
+
       <FieldGroup>
         <div className="grid grid-cols-1 gap-4">
           {/* Email */}

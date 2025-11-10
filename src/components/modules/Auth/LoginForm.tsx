@@ -10,20 +10,24 @@ import { Input } from "@/components/ui/input";
 import { loginUser } from "@/service/auth/loginUser";
 import { getFieldError } from "@/utils/getFieldError";
 import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { toast } from "sonner";
 
-export default function LoginForm( { redirectPath }: { redirectPath?: string} ) {
-  console.log("🚀 ~ LoginForm ~ redirectPath:", redirectPath)
+export default function LoginForm({ redirectPath }: { redirectPath?: string }) {
   const [state, formAction, isPending] = useActionState(loginUser, null);
 
-
-  console.log("🚀 ~ LoginForm ~ state:", state);
+  useEffect(() => {
+    if (state && !state.success && state.message) {
+      toast.error(state.message);
+    }
+  }, [state]);
 
   return (
     <form action={formAction}>
-
       {/* hidden inpit field if redirect path is avaible */}
-      {redirectPath && <input type="hidden" name="redirect" value={redirectPath} />}
+      {redirectPath && (
+        <input type="hidden" name="redirect" value={redirectPath} />
+      )}
 
       <FieldGroup>
         <div className="grid grid-cols-1 gap-4">

@@ -6,8 +6,8 @@ import { getDefaultDashboardRoute, isValidRedirectForRole } from "@/utils/auth";
 import { loginSchema } from "@/validation/auth.validation";
 import { parse } from "cookie";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { setCookie } from "./cookieHandle";
 
 export const loginUser = async (
   _currentState: any,
@@ -69,9 +69,7 @@ export const loginUser = async (
       throw new Error("Authentication tokens are missing");
     }
 
-    const cookieStore = await cookies();
-
-    cookieStore.set("accessToken", accessTokenObject["accessToken"], {
+    await setCookie("accessToken", accessTokenObject["accessToken"], {
       httpOnly: true,
       maxAge: parseInt(accessTokenObject["Max-Age"]) || 3 * 24 * 60 * 60 * 1000,
       sameSite: accessTokenObject["SameSite"] || "none",
@@ -79,7 +77,7 @@ export const loginUser = async (
       secure: true,
     });
 
-    cookieStore.set("refreshToken", refreshTokenObject["refreshToken"], {
+    await setCookie("refreshToken", refreshTokenObject["refreshToken"], {
       httpOnly: true,
       maxAge:
         parseInt(refreshTokenObject["Max-Age"]) || 30 * 24 * 60 * 60 * 1000,
@@ -99,18 +97,35 @@ export const loginUser = async (
 
     const userRole: UserRole = verifiedToken.role;
 
+    const result = await res.json();
+
+    if (!result.success) {
+      throw new Error(result.message || "Login failed");
+    }
+
     if (redirectTo) {
       const requestedPath = redirectTo.toString();
       if (isValidRedirectForRole(requestedPath, userRole)) {
-        redirect(requestedPath);
+        redirect(`${requestedPath}?loggedIn=true`);
       } else {
-        redirect(getDefaultDashboardRoute(userRole));
+        redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
       }
+    } else {
+      redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
     }
-
-    redirect(getDefaultDashboardRoute(userRole));
-  } catch (error) {
+  } catch (error: any) {
+    // Re-throw NEXT_REDIRECT errors so Next.js can handle them
+    if (error?.digest?.startsWith("NEXT_REDIRECT")) {
+      throw error;
+    }
     console.log(error);
-    return { error: "Login failed" };
+    return {
+      success: false,
+      message: `${
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Login Failed. You might have entered incorrect email or password."
+      }`,
+    };
   }
 };

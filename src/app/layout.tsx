@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Toaster } from 'react-hot-toast';
-import { UserProvider } from "@/provider/UserProvider";
+import { Toaster } from "sonner";
+import { LogInSuccessToast } from "@/components/shared/LogInSuccessToast";
+import { LogOutSuccessToast } from "@/components/shared/LogOutSuccessToast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,8 +19,8 @@ export const metadata: Metadata = {
   title: "Health Care - CodeWIthSaidul",
   description: "Health Care is a easy to get a consultent from top doctors",
   icons: {
-    icon: "/fabicon.ico"
-  }
+    icon: "/fabicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -32,10 +33,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <UserProvider>
-          {children}
-          <Toaster />
-        </UserProvider>
+        {children}
+        <LogInSuccessToast />
+        <LogOutSuccessToast />
+        <Toaster position="top-center" richColors />
       </body>
     </html>
   );

@@ -1,6 +1,5 @@
 "use client"
 import { IUser } from "@/types/user.types";
-import { checkAuthStatus } from "@/utils/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 
 
@@ -31,8 +30,7 @@ export const UserProvider = ({
   useEffect(() => {
       const revalidateUser = async () => {
           try{
-            const res = await checkAuthStatus();
-            setUser(res.user);
+            setUser(null);
           }catch{
             setUser(null)
           }

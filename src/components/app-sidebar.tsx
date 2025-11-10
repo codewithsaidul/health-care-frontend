@@ -1,6 +1,12 @@
 "use client";
 
-import { IconDashboard, IconHelp, IconSearch, IconSettings, IconUsers } from "@tabler/icons-react";
+import {
+  IconDashboard,
+  IconHelp,
+  IconSearch,
+  IconSettings,
+  IconUsers,
+} from "@tabler/icons-react";
 import * as React from "react";
 
 import { NavMain } from "@/components/nav-main";
@@ -12,39 +18,33 @@ import {
   SidebarFooter,
   SidebarHeader,
 } from "@/components/ui/sidebar";
-import { UseUser } from "@/provider/UserProvider";
 import Link from "next/link";
-import { IUser } from "@/types/user.types";
-
-const navMainItems = [
-  {
-    title: "Dashboard",
-    url: "#",
-    icon: IconDashboard,
-  },
-  // {
-  //   title: "Lifecycle",
-  //   url: "#",
-  //   icon: IconListDetails,
-  // },
-  // {
-  //   title: "Analytics",
-  //   url: "#",
-  //   icon: IconChartBar,
-  // },
-  // {
-  //   title: "Add Doctor",
-  //   url: "/dashboard/add-doctor",
-  //   icon: IconUsers,
-  // },
-];
-
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { user } = UseUser();
-  console.log("🚀 ~ AppSidebar ~ user:", user)
+  const navMainItems = [
+    {
+      title: "Dashboard",
+      url: "#",
+      icon: IconDashboard,
+    },
+    // {
+    //   title: "Lifecycle",
+    //   url: "#",
+    //   icon: IconListDetails,
+    // },
+    // {
+    //   title: "Analytics",
+    //   url: "#",
+    //   icon: IconChartBar,
+    // },
+    // {
+    //   title: "Add Doctor",
+    //   url: "/dashboard/add-doctor",
+    //   icon: IconUsers,
+    // },
+  ];
 
-  if (user?.role === "ADMIN") {
+  if ("ADMIN" === "ADMIN") {
     navMainItems.push(
       {
         title: "Manage Doctors",
@@ -60,30 +60,30 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   }
 
   const data = {
-  user: {
-    name: user?.name,
-    email: user?.email,
-    profilePhoto: user?.profilePhoto,
-  },
-  navMain: navMainItems,
-  navSecondary: [
-    {
-      title: "Settings",
-      url: "#",
-      icon: IconSettings,
-    },
-    {
-      title: "Get Help",
-      url: "#",
-      icon: IconHelp,
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: IconSearch,
-    },
-  ],
-};
+    // user: {
+    //   name: user?.name,
+    //   email: user?.email,
+    //   profilePhoto: user?.profilePhoto,
+    // },
+    navMain: navMainItems,
+    navSecondary: [
+      {
+        title: "Settings",
+        url: "#",
+        icon: IconSettings,
+      },
+      {
+        title: "Get Help",
+        url: "#",
+        icon: IconHelp,
+      },
+      {
+        title: "Search",
+        url: "#",
+        icon: IconSearch,
+      },
+    ],
+  };
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>
@@ -104,7 +104,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user as IUser} />
+        <NavUser user={null} />
       </SidebarFooter>
     </Sidebar>
   );

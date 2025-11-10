@@ -14,6 +14,7 @@ export const registerValidationZodSchema = z
     name: z.string().min(1, { message: "Name is required" }),
     address: z.string().optional(),
     email: z.email({ message: "Valid email is required" }),
+    contactNumber: z.string().nonempty("Contact Number is required"),
     password: z
       .string()
       .min(6, {

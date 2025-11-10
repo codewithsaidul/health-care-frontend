@@ -10,12 +10,17 @@ import { Input } from "@/components/ui/input";
 import { registerPatient } from "@/service/auth/RegisterPatient";
 import { getFieldError } from "@/utils/getFieldError";
 import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { toast } from "sonner";
 
 export default function RegisterForm() {
   const [state, formAction, isPending] = useActionState(registerPatient, null);
-  console.log("🚀 ~ RegisterForm ~ state:", state);
 
+  useEffect(() => {
+    if (state && !state.success && state.message) {
+      toast.error(state.message);
+    }
+  }, [state]);
 
   return (
     <form action={formAction}>
@@ -41,6 +46,22 @@ export default function RegisterForm() {
               placeholder="123 Main St"
             />
           </Field>
+          {/* Phone Number */}
+          <Field>
+            <FieldLabel htmlFor="contactNumber">Contact Number</FieldLabel>
+            <Input
+              id="contactNumber"
+              name="contactNumber"
+              type="text"
+              placeholder="+880 19000000"
+            />
+
+            {getFieldError("contactNumber", state) && (
+              <FieldDescription className="text-red-600">
+                {getFieldError("contactNumber", state)}
+              </FieldDescription>
+            )}
+          </Field>
           {/* Email */}
           <Field>
             <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -58,7 +79,7 @@ export default function RegisterForm() {
             )}
           </Field>
           {/* Password */}
-          <Field>
+          <Field className="md:col-span-2">
             <FieldLabel htmlFor="password">Password</FieldLabel>
             <Input id="password" name="password" type="password" />
 

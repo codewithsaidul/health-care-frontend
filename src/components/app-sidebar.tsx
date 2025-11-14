@@ -7,20 +7,23 @@ import {
   IconSettings,
   IconUsers,
 } from "@tabler/icons-react";
-import * as React from "react";
 
 import { NavMain } from "@/components/nav-main";
 import { NavSecondary } from "@/components/nav-secondary";
-import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
 } from "@/components/ui/sidebar";
+import { UserInfo } from "@/types/user.types";
 import Link from "next/link";
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+interface AppSidebarProps {
+  // props: React.ComponentProps<typeof Sidebar>;
+  userInfo: UserInfo | null;
+}
+
+export function AppSidebar({ userInfo }: AppSidebarProps) {
   const navMainItems = [
     {
       title: "Dashboard",
@@ -44,7 +47,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     // },
   ];
 
-  if ("ADMIN" === "ADMIN") {
+  if (userInfo?.role === "ADMIN") {
     navMainItems.push(
       {
         title: "Manage Doctors",
@@ -60,11 +63,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   }
 
   const data = {
-    // user: {
-    //   name: user?.name,
-    //   email: user?.email,
-    //   profilePhoto: user?.profilePhoto,
-    // },
     navMain: navMainItems,
     navSecondary: [
       {
@@ -86,7 +84,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   };
 
   return (
-    <Sidebar collapsible="offcanvas" {...props}>
+    <Sidebar collapsible="offcanvas">
       <SidebarHeader>
         <Link href="/" className="flex items-center gap-2 mt-3">
           <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
@@ -103,9 +101,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={null} />
-      </SidebarFooter>
+      {/* <SidebarFooter>
+        <NavUser user={userInfo} />
+      </SidebarFooter> */}
     </Sidebar>
   );
 }

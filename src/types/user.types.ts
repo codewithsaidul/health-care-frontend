@@ -10,3 +10,16 @@ export interface IUser {
   exp: number;
   iat: number;
 }
+
+export interface UserInfo {
+    name: string;
+    email: string;
+    role: UserRole;
+}
+
+
+export interface UserInfo {
+    name: string;
+    email: string;
+    role: UserRole;
+}

@@ -1,15 +1,27 @@
-"use client"
+"use client";
 import { logOutUser } from "@/service/auth/logOutUser";
 import { Button } from "../ui/button";
 
-export default function LogOutBtn() {
+export default function LogOutBtn ({ shad = true }: { shad?: boolean }) {
   const handleLogout = async () => {
     await logOutUser();
   };
 
   return (
-    <Button variant={"destructive"} onClick={handleLogout} className="cursor-pointer">
-      Logout
-    </Button>
+    <>
+      {shad ? (
+        <Button
+          variant={"destructive"}
+          onClick={handleLogout}
+          className="cursor-pointer"
+        >
+          Logout
+        </Button>
+      ) : (
+        <button onClick={handleLogout} className="cursor-pointer">
+          Logout
+        </button>
+      )}
+    </>
   );
 }

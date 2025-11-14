@@ -2,7 +2,7 @@
 export default function AdminManagementPage () {
   return (
     <div>
-       <h1>This is page Component</h1>
+       <h1>This is Admin Management</h1>
    </div>
   );
 };

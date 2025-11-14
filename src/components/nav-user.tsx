@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   IconCreditCard,
@@ -6,13 +6,9 @@ import {
   IconLogout,
   IconNotification,
   IconUserCircle,
-} from "@tabler/icons-react"
+} from "@tabler/icons-react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,20 +17,23 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
-import { IUser } from "@/types/user.types"
+} from "@/components/ui/sidebar";
+import { UserInfo } from "@/types/user.types";
+import { logOutUser } from "@/service/auth/logOutUser";
 
-export function NavUser({
-  user,
-}: {
-  user: IUser | null}) {
-  const { isMobile } = useSidebar()
+export function NavUser({ user }: { user: UserInfo | null }) {
+  const { isMobile } = useSidebar();
+
+    const handleLogout = async () => {
+      await logOutUser();
+    };
+  
 
   return (
     <SidebarMenu>
@@ -46,8 +45,10 @@ export function NavUser({
               className="bg-transparent! hover:text-black! cursor-pointer"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user?.profilePhoto} alt={user?.name} />
-                <AvatarFallback className="rounded-lg bg-rose-500">CN</AvatarFallback>
+                <AvatarImage src={""} alt={user?.name} />
+                <AvatarFallback className="rounded-lg bg-rose-500">
+                  CN
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user?.name}</span>
@@ -67,7 +68,7 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user?.profilePhoto} alt={user?.name} />
+                  <AvatarImage src={"user?.profilePhoto"} alt={user?.name} />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
@@ -94,7 +95,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
               <IconLogout />
               Log out
             </DropdownMenuItem>
@@ -102,5 +103,5 @@ export function NavUser({
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  )
+  );
 }

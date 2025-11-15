@@ -44,7 +44,6 @@ export const isRouteMatches = (
     return true;
   }
   return routes.patterns.some((pattern: RegExp) => pattern.test(pathname));
-  // if pathname === /dashboard/my-appointments => matches /^\/dashboard/ => true
 };
 
 export const getRouteOwner = (
@@ -94,36 +93,3 @@ export const isValidRedirectForRole = (
 
   return false;
 };
-
-// export const checkAuthStatus = async () => {
-//   try {
-//     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
-//       method: "GET",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       credentials: "include",
-//     });
-//     const data = await res.json();
-
-//     if (!res.ok) {
-//       throw {
-//         error: data?.error || data?.error?.err || "Login Failed!",
-//         message: data?.message || "Something went wrong during login.",
-//         success: res.ok,
-//       } as IError;
-//     }
-
-//     return {
-//       isAuthenticated: true,
-//       user: data.data,
-//     };
-//   } catch (error: unknown) {
-//     const err = error as IError
-//     console.log("🚀 ~ checkAuthStatus ~ err:", err)
-//     return {
-//       isAuthenticated: false,
-//       user: null,
-//     };
-//   }
-// };

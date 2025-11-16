@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { loginUser } from "@/service/auth/loginUser";
-import { getFieldError } from "@/utils/getFieldError";
+import { getInputFieldError } from "@/utils/getInputFieldError";
 import Link from "next/link";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
@@ -41,9 +41,9 @@ export default function LoginForm({ redirectPath }: { redirectPath?: string }) {
               placeholder="m@example.com"
             />
 
-            {getFieldError("email", state) && (
+            {getInputFieldError("email", state) && (
               <FieldDescription className="text-red-600">
-                {getFieldError("email", state)}
+                {getInputFieldError("email", state)}
               </FieldDescription>
             )}
           </Field>
@@ -57,9 +57,9 @@ export default function LoginForm({ redirectPath }: { redirectPath?: string }) {
               type="password"
               placeholder="Enter your password"
             />
-            {getFieldError("password", state) && (
+            {getInputFieldError("password", state) && (
               <FieldDescription className="text-red-600">
-                {getFieldError("password", state)}
+                {getInputFieldError("password", state)}
               </FieldDescription>
             )}
           </Field>

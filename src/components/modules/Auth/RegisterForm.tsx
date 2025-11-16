@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { registerPatient } from "@/service/auth/RegisterPatient";
-import { getFieldError } from "@/utils/getFieldError";
+import { getInputFieldError } from "@/utils/getInputFieldError";
 import Link from "next/link";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
@@ -30,9 +30,9 @@ export default function RegisterForm() {
           <Field>
             <FieldLabel htmlFor="name">Full Name</FieldLabel>
             <Input id="name" name="name" type="text" placeholder="John Doe" />
-            {getFieldError("name", state) && (
+            {getInputFieldError("name", state) && (
               <FieldDescription className="text-red-600">
-                {getFieldError("name", state)}
+                {getInputFieldError("name", state)}
               </FieldDescription>
             )}
           </Field>
@@ -56,9 +56,9 @@ export default function RegisterForm() {
               placeholder="+880 19000000"
             />
 
-            {getFieldError("contactNumber", state) && (
+            {getInputFieldError("contactNumber", state) && (
               <FieldDescription className="text-red-600">
-                {getFieldError("contactNumber", state)}
+                {getInputFieldError("contactNumber", state)}
               </FieldDescription>
             )}
           </Field>
@@ -72,9 +72,9 @@ export default function RegisterForm() {
               placeholder="m@example.com"
             />
 
-            {getFieldError("email", state) && (
+            {getInputFieldError("email", state) && (
               <FieldDescription className="text-red-600">
-                {getFieldError("email", state)}
+                {getInputFieldError("email", state)}
               </FieldDescription>
             )}
           </Field>
@@ -83,9 +83,9 @@ export default function RegisterForm() {
             <FieldLabel htmlFor="password">Password</FieldLabel>
             <Input id="password" name="password" type="password" />
 
-            {getFieldError("password", state) && (
+            {getInputFieldError("password", state) && (
               <FieldDescription className="text-red-600">
-                {getFieldError("password", state)}
+                {getInputFieldError("password", state)}
               </FieldDescription>
             )}
           </Field>
@@ -98,9 +98,9 @@ export default function RegisterForm() {
               type="password"
             />
 
-            {getFieldError("confirmPassword", state) && (
+            {getInputFieldError("confirmPassword", state) && (
               <FieldDescription className="text-red-600">
-                {getFieldError("confirmPassword", state)}
+                {getInputFieldError("confirmPassword", state)}
               </FieldDescription>
             )}
           </Field>

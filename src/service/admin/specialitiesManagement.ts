@@ -29,7 +29,7 @@ export async function createSpeciality(_prevState: any, formData: FormData) {
             newFormData.append("file", formData.get("file") as Blob)
         }
 
-        const response = await Fetcher.post("/specialties", {
+        const response = await Fetcher.post("/specialties/create-specialties", {
             body: newFormData,
         })
 
@@ -45,7 +45,7 @@ export async function createSpeciality(_prevState: any, formData: FormData) {
 
 export async function getSpecialities() {
     try {
-        const response = await Fetcher.get("/specialties")
+        const response = await Fetcher.get("/specialties/getAllSpecialties")
         const result = await response.json();
         return result;
     } catch (error: any) {
@@ -59,7 +59,7 @@ export async function getSpecialities() {
 
 export async function deleteSpeciality(id: string) {
     try {
-        const response = await Fetcher.delete(`/specialties/${id}`)
+        const response = await Fetcher.delete(`/specialties/deleteSpecialties/${id}`)
         const result = await response.json();
         return result;
     } catch (error: any) {
